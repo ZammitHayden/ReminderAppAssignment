@@ -3,8 +3,13 @@ import 'package:provider/provider.dart';
 import 'providers/task_provider.dart';
 import 'screens/task_list_screen.dart';
 import 'screens/add_task_screen.dart';
+import 'service/notification_service.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await NotificationService.instance.init();
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => TaskProvider(),

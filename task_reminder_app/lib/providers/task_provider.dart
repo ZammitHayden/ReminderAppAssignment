@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/task.dart';
+import '../service/notification_service.dart';
+
 
 class TaskProvider extends ChangeNotifier {
   final List<Task> _tasks = [];
@@ -8,6 +10,7 @@ class TaskProvider extends ChangeNotifier {
   void addTask(String title) {
     _tasks.add(Task(title: title));
     notifyListeners();
+    NotificationService.instance.showTaskAdded(title);
   }
 
   void toggleTask(int index) {
