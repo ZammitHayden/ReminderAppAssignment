@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Task Reminder App',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: TaskListScreen(),
-      routes: {'/add': (_) => },
+      routes: {'/add': (_) => AddTaskScreen()},
     );
   }
 }
