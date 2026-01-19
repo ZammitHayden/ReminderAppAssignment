@@ -25,6 +25,9 @@ class TaskListScreen extends StatelessWidget {
                         : null,
                   ),
                 ),
+                subtitle: taskProvider.tasks[index].reminderDate == null
+                ? null
+                : Text('Reminder: ${taskProvider.tasks[index].reminderDate}'),
               );
             },
           );
