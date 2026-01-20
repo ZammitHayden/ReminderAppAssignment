@@ -2,11 +2,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 class NotificationService {
   NotificationService._();
   static final NotificationService instance = NotificationService._();
 
   final FlutterLocalNotificationsPlugin _plugin = FlutterLocalNotificationsPlugin();
+  final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
   static const AndroidNotificationChannel _channel = AndroidNotificationChannel(
     'task_channel',
@@ -34,6 +37,13 @@ class NotificationService {
   }
 
   Future<void> showTaskAdded(String title) async {
+    await _analytics.logEvent(
+      name: 'local_notification_shown',
+      parameters: {
+        'type': 'task_added',
+      },
+    );
+
     const androidDetails = AndroidNotificationDetails(
       'task_channel',
       'Task Notifications',
