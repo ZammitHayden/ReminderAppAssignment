@@ -2,13 +2,18 @@ name: Flutter CI Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["**"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["**"]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: task_reminder_app
 
     steps:
       - name: Checkout repository
@@ -17,7 +22,11 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "stable"
+          channel: "stable"
+          cache: true
+
+      - name: Show Flutter version
+        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
@@ -28,5 +37,5 @@ jobs:
       - name: Run tests
         run: flutter test
 
-      - name: Build APK
+      - name: Build APK (debug)
         run: flutter build apk --debug
