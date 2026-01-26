@@ -13,10 +13,13 @@ import 'service/notification_service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize Firebase services 
   await Firebase.initializeApp();
 
+  // Initialize local notification service. For TaskProvider is accessible throughout the app
   await NotificationService.instance.init();
 
+  // Wrap the app with ChangeNotifierProvider
   runApp(
     ChangeNotifierProvider(
       create: (_) => TaskProvider(),
@@ -25,6 +28,7 @@ Future<void> main() async {
   );
 }
 
+//stateless widget since does not manage change.
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
@@ -36,6 +40,7 @@ class MyApp extends StatelessWidget {
       title: 'Task Reminder App',
       theme: ThemeData(primarySwatch: Colors.blue),
 
+      //automatically logs screen transitions to Firebase Analytics.
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: _analytics),
       ],

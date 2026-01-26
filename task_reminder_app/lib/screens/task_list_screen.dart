@@ -7,12 +7,18 @@ class TaskListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Task Reminder')),
+
+      // Consumer listens to TaskProvider and rebuilds
       body: Consumer<TaskProvider>(
         builder: (context, taskProvider, child) {
+
+          // ListView.builder efficiently creates list items
           return ListView.builder(
             itemCount: taskProvider.tasks.length,
             itemBuilder: (context, index) {
               return ListTile(
+                
+                // Checkbox shows whether the task is completed. Tapping it toggles the task's completion status through provider.
                 leading: Checkbox(
                   value: taskProvider.tasks[index].isCompleted,
                   onChanged: (_) => taskProvider.toggleTask(index),
